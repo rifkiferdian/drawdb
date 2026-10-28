@@ -1,5 +1,5 @@
 (() => {
-const $=s=>document.querySelector(s), uid=p=>p+'_'+crypto.randomUUID().slice(0,8), clone=x=>JSON.parse(JSON.stringify(x));
+const $=s=>document.querySelector(s), uid=p=>{const id=typeof globalThis.crypto?.randomUUID==='function'?globalThis.crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);return p+'_'+id.slice(0,8)}, clone=x=>JSON.parse(JSON.stringify(x));
 const app=$('#app'), projectId=app.dataset.id;
 const TYPES={mysql:['BIGINT','BINARY','BIT','BLOB','BOOLEAN','CHAR','DATE','DATETIME','DECIMAL','DOUBLE','ENUM','FLOAT','INT','JSON','LONGBLOB','LONGTEXT','MEDIUMBLOB','MEDIUMINT','MEDIUMTEXT','SET','SMALLINT','TEXT','TIME','TIMESTAMP','TINYBLOB','TINYINT','TINYTEXT','VARBINARY','VARCHAR','YEAR'],postgresql:['BIGINT','BIGSERIAL','BIT','BOOLEAN','BYTEA','CHAR','DATE','DECIMAL','DOUBLE PRECISION','INTEGER','INTERVAL','JSON','JSONB','MONEY','NUMERIC','REAL','SERIAL','SMALLINT','SMALLSERIAL','TEXT','TIME','TIMESTAMP','TIMESTAMPTZ','UUID','VARCHAR','XML']};
 let state=normalize(window.INITIAL_DIAGRAM), selected=null, history=[], future=[], saveTimer, dirty=false, drag=null, pan=null, linkDrag=null;
