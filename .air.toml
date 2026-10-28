@@ -1,0 +1,34 @@
+root = "."
+tmp_dir = "tmp"
+env_files = [".env"]
+
+[build]
+cmd = "go build -o ./tmp/main ."
+bin = "./tmp/main"
+entrypoint = ["./tmp/main"]
+pre_cmd = ["npm run css:build"]
+include_ext = ["go", "html", "js", "css"]
+exclude_dir = ["tmp", "vendor", "node_modules", "web/static/css"]
+exclude_regex = ["_test\\.go"]
+exclude_unchanged = true
+delay = 250
+stop_on_error = true
+send_interrupt = false
+kill_delay = 500
+
+[build.windows]
+cmd = "go build -o ./tmp/main.exe ."
+bin = "tmp\\main.exe"
+entrypoint = ["tmp\\main.exe"]
+
+[log]
+time = true
+
+[color]
+main = "magenta"
+watcher = "cyan"
+build = "yellow"
+runner = "green"
+
+[misc]
+clean_on_exit = true

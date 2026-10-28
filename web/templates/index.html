@@ -1,0 +1,16 @@
+{{define "index.html"}}{{template "base-start" .}}
+<main class="mx-auto max-w-6xl px-5 py-10">
+  <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div><div class="mb-2 inline-flex items-center gap-2 rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">Visual schema workspace</div><h1 class="text-3xl font-bold tracking-tight text-slate-950">Database projects</h1><p class="mt-2 text-slate-500">Design, document, and export database schemas visually.</p></div>
+    <button class="btn btn-primary" data-new-project><span class="text-lg">＋</span> New project</button>
+  </div>
+  {{if .Projects}}<section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  {{range .Projects}}<article class="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-md" data-project="{{.ID}}" data-name="{{.Name}}">
+    <div class="mb-8 flex items-start justify-between"><div class="flex size-11 items-center justify-center rounded-xl bg-brand-50 text-xl text-brand-600">⌘</div><div class="relative"><button class="icon-btn" data-menu aria-label="Project actions">•••</button><div class="absolute right-0 z-10 hidden w-36 overflow-hidden rounded-xl border border-slate-200 bg-white p-1 shadow-lg" data-menu-pop><button class="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-slate-50" data-rename>Rename</button><button class="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-slate-50" data-duplicate>Duplicate</button><button class="w-full rounded-lg px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50" data-delete>Delete</button></div></div></div>
+    <a href="/projects/{{.ID}}" class="block"><h2 class="truncate font-semibold text-slate-900">{{.Name}}</h2><p class="mt-1 text-xs text-slate-400">Updated {{.UpdatedAt.Format "02 Jan 2006, 15:04"}}</p></a>
+  </article>{{end}}</section>
+  {{else}}<section class="rounded-3xl border border-dashed border-slate-300 bg-white py-20 text-center"><div class="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-slate-100 text-2xl">⌘</div><h2 class="font-semibold text-slate-900">No projects yet</h2><p class="mt-1 text-sm text-slate-500">Create your first database diagram.</p><button class="btn btn-primary mt-5" data-new-project>Create project</button></section>{{end}}
+</main>
+<div class="modal" id="project-modal"><form class="modal-card" id="project-form"><h2 class="text-lg font-semibold" id="project-modal-title">New project</h2><label class="label mt-5" for="project-name">Project name</label><input class="field" id="project-name" required maxlength="160" placeholder="e.g. E-commerce database"><div class="mt-5 flex justify-end gap-2"><button type="button" class="btn" data-close>Cancel</button><button class="btn btn-primary" type="submit">Save</button></div></form></div>
+<script src="/static/js/projects.js" defer></script>
+{{template "base-end" .}}{{end}}
